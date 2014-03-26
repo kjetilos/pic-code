@@ -1,0 +1,40 @@
+gplink-1.2.0 #980 (Mar 20 2014)
+Copyright (c) 1998-2013 gputils project
+Listing File Generated: 3-26-2014  14:07:01
+ 
+ 
+Address  Value    Disassembly              Source
+-------  -----    -----------              ------
+                                           
+                                           ; use PIC 12F675
+                                           list     p=12f675
+                                           #include <p12f675.inc>
+                                                   LIST
+                                           
+                                           ;==========================================================================
+                                           ;  MPASM PIC12F675 processor include
+                                           ; 
+                                           ;  (c) Copyright 1999-2013 Microchip Technology, All rights reserved
+                                           ;==========================================================================
+                                           
+                                                   NOLIST
+                                           
+                                           ; Configuration word 
+                                           
+002007   3f84     addlw   0x84               __CONFIG   _CP_OFF & _CPD_OFF & _BODEN_OFF & _MCLRE_OFF & _WDT_OFF & _PWRTE_ON & _INTRC_OSC_NOCLKOUT 
+                                           
+                                           
+                                             org 0x00
+000000   2801     goto    0x1                goto main
+                                           
+                                           main
+000001   1683     bsf     0x3, 0x5           bsf STATUS,RP0 ; enter bank 1
+000002   30ce     movlw   0xce               movlw b'11001110'
+000003   0085     movwf   0x5                movwf TRISIO ; configure I/O
+                                           
+000004   1283     bcf     0x3, 0x5           bcf STATUS,RP0 ; enter bank 0
+000005   3010     movlw   0x10               movlw b'00010000'
+000006   0085     movwf   0x5                movwf GPIO  ; power on desired LED D0 = 0 1 Z Z
+000007   2807     goto    0x7                goto $       ; loop forever
+                                           
+                                             end

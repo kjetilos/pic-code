@@ -1,12 +1,8 @@
-led01.hex: led01.asm
-	gpasm $^ -o $@
-	#link -m $^ -o $@
+led01.hex: led01.o
+	gplink -m $^ -o $@
 
-#%.o: %.asm
-#	gpasm -c $^ -o $@
-
-#traffic.hex: traffic.asm
-#	gpasm traffic.asm
+%.o: %.asm
+	gpasm -c $^ -o $@
 
 dasm: led01.hex
 	gpdasm -p 12f675 $^
