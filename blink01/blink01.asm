@@ -7,6 +7,9 @@ list     p=12f675
 
   __CONFIG   _CP_OFF & _CPD_OFF & _BODEN_OFF & _MCLRE_OFF & _WDT_OFF & _PWRTE_ON & _INTRC_OSC_NOCLKOUT 
 
+INT_VAR     UDATA_SHR   0x20
+sGPIO       RES     1
+
 reset_vector code 0x0000  ; processor reset vector
   goto main
 
@@ -26,9 +29,13 @@ main
   movwf TRISIO ; configure I/O
 
   bcf STATUS,RP0 ; enter bank 0
-  movlw b'00010000'
+
+  clrf sGPIO        ; clear shadow register
 flash
-  xorwf GPIO,f
+  movf sGPIO,w      ; get shadow copy of GPIO
+  xorlw b'00010000' ; toggle bit 4
+  movwf sGPIO
+  movwf GPIO
   goto flash
 
   end
