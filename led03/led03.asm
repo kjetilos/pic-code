@@ -7,8 +7,7 @@ list     p=12f675
 
   __CONFIG   _CP_OFF & _CPD_OFF & _BODEN_OFF & _MCLRE_OFF & _WDT_OFF & _PWRTE_ON & _INTRC_OSC_NOCLKOUT 
 
-
-  org 0x00
+reset_vector code 0x0000  ; processor reset vector
   goto main
 
 main
