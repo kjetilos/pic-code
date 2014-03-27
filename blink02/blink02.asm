@@ -8,9 +8,9 @@ list     p=12f675
   __CONFIG   _CP_OFF & _CPD_OFF & _BODEN_OFF & _MCLRE_OFF & _WDT_OFF & _PWRTE_ON & _INTRC_OSC_NOCLKOUT 
 
 INT_VAR     UDATA_SHR   0x20
-sGPIO       res 1
 dc1         res 1  ; delay loop counter
 dc2         res 1
+dc3         res 1
 
 reset_vector code 0x0000  ; processor reset vector
   goto main
@@ -32,29 +32,35 @@ main
 
   bcf STATUS,RP0 ; enter bank 0
 
-  clrf sGPIO        ; clear shadow register
 flash
-  movf sGPIO,w      ; get shadow copy of GPIO
-  xorlw b'00010000' ; toggle bit 4
-  movwf sGPIO
+  movlw b'00010000'
   movwf GPIO
-  call delay500
+  movlw .20
+  call delay10
+
+  movlw b'00000000'
+  movwf GPIO
+  movlw .80
+  call delay10
+
   goto flash
 
-delay500
-  movlw .244
+delay10
+  movwf dc3
+dly2
+  movlw .13
   movwf dc2
+
   clrf dc1
-dly1 
-  nop
+dly1
   decfsz dc1,f
   goto dly1
-dly2
-  nop
-  decfsz dc1,f
-  goto dly2
+
   decfsz dc2,f
   goto dly1
+
+  decfsz dc3,f
+  goto dly2
 
   retlw 0
 
