@@ -26,11 +26,9 @@ main
   movwf TRISIO ; configure I/O
 
   bcf STATUS,RP0 ; enter bank 0
-flash
   movlw b'00010000'
-  movwf GPIO  ; power on LED D0
-  movlw b'00000000'
-  movwf GPIO  ; power off LED D0
-  goto flash       ; loop forever
+flash
+  xorwf GPIO,f
+  goto flash
 
   end
