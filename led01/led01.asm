@@ -13,7 +13,7 @@ list     p=12f675
 
 main
   bsf STATUS,RP0 ; enter bank 1
-  movlw b'11001110'
+  movlw b'00001110'
   movwf TRISIO ; configure I/O
 
   bcf STATUS,RP0 ; enter bank 0
