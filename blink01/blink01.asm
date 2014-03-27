@@ -8,7 +8,9 @@ list     p=12f675
   __CONFIG   _CP_OFF & _CPD_OFF & _BODEN_OFF & _MCLRE_OFF & _WDT_OFF & _PWRTE_ON & _INTRC_OSC_NOCLKOUT 
 
 INT_VAR     UDATA_SHR   0x20
-sGPIO       RES     1
+sGPIO       res 1
+dc1         res 1  ; delay loop counter
+dc2         res 1
 
 reset_vector code 0x0000  ; processor reset vector
   goto main
@@ -36,6 +38,22 @@ flash
   xorlw b'00010000' ; toggle bit 4
   movwf sGPIO
   movwf GPIO
+
+  ; delay 500ms
+  movlw .244
+  movwf dc2
+  clrf dc1
+dly1 
+  nop
+  decfsz dc1,f
+  goto dly1
+dly2
+  nop
+  decfsz dc1,f
+  goto dly2
+  decfsz dc2,f
+  goto dly1
+
   goto flash
 
   end
