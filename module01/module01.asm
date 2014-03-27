@@ -12,6 +12,10 @@ list     p=12f675
 reset_vector code 0x0000  ; processor reset vector
   goto main
 
+; Jump table used because of different restriction on call and goto instructions
+delay10
+  goto delay10_r
+
 main
 
 ; Calibrate internal oscillator according to the pic12f675 datasheet
@@ -33,12 +37,12 @@ flash
   movlw b'00010000'
   movwf GPIO
   movlw .20
-  call delay10_r
+  call delay10
 
   movlw b'00000000'
   movwf GPIO
   movlw .80
-  call delay10_r
+  call delay10
 
   goto flash
 
