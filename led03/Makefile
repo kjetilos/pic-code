@@ -1,4 +1,4 @@
-NAME=led01
+NAME=led03
 
 $(NAME).hex: $(NAME).o
 	gplink -m $^ -o $@
