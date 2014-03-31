@@ -35,9 +35,9 @@ main
   bcf STATUS,RP0 ; enter bank 0
 
 loop
-  movlw b'00000000'  
-  btfss GPIO,3    ; test if button is pressed
-  movlw b'00010000'
+  clrw               ; clear working register
+  btfss GPIO,3       ; test if button is pressed
+  movlw b'00010000'  ; set GP4 on if GPIO pin 3 is set
   movwf GPIO
 
   goto loop
