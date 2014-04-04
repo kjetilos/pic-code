@@ -10,11 +10,6 @@ list     p=12f675
 
   __CONFIG   _CP_OFF & _CPD_OFF & _BODEN_OFF & _MCLRE_OFF & _WDT_OFF & _PWRTE_ON & _INTRC_OSC_NOCLKOUT 
 
-INT_VAR     UDATA_SHR   0x20
-dc1         res 1  ; delay loop counter
-dc2         res 1
-dc3         res 1
-
 reset_vector code 0x0000  ; processor reset vector
   goto main
 
